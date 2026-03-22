@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Phishing Detector</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="brand">AI Phishing Detector</div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+    </div>
+</nav>
+
+<div class="hero">
+    <h1>AI Phishing URL Detector</h1>
+    <p>Paste any URL and our Machine Learning model will detect if it is phishing or legitimate instantly.</p>
+    <div class="search-box">
+        <input type="text" id="urlInput"
+               placeholder="Enter URL e.g. https://example.com"
+               onkeypress="if(event.key==='Enter') checkURL()">
+        <button onclick="checkURL()">Analyse URL</button>
+    </div>
+    <div id="loading" class="loading" style="display:none">
+        Analysing URL...
+    </div>
+</div>
+
+<div id="result" class="result-card" style="display:none">
+    <div id="result-header" class="result-header">
+        <span id="result-text"></span>
+    </div>
+
+    <div class="confidence-bar-wrapper">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+            <span style="color:#888;font-size:13px">Confidence</span>
+            <span id="confidence-text" style="font-size:13px;font-weight:600"></span>
+        </div>
+        <div class="confidence-bar">
+            <div id="confidence-fill" class="confidence-fill"></div>
+        </div>
+    </div>
+
+    <div class="prob-grid">
+        <div class="prob-card legit">
+            <div id="legit-prob" class="prob-num">0%</div>
+            <div class="prob-label">Legitimate</div>
+        </div>
+        <div class="prob-card phish">
+            <div id="phish-prob" class="prob-num">0%</div>
+            <div class="prob-label">Phishing</div>
+        </div>
+    </div>
+
+    <div class="features-grid">
+        <h3>URL Analysis</h3>
+        <div id="features-list"></div>
+    </div>
+
+    <div class="url-display">
+        <span style="color:#888;font-size:12px">Analysed URL: </span>
+        <span id="url-text" style="font-size:13px;word-break:break-all"></span>
+    </div>
+</div>
+
+<div class="examples">
+    <h2>Try These Examples</h2>
+    <div class="example-grid">
+        <div class="example-card safe"
+             onclick="testURL('https://www.google.com')">
+            <div class="ex-label">Safe</div>
+            <div class="ex-url">https://www.google.com</div>
+        </div>
+        <div class="example-card safe"
+             onclick="testURL('https://www.github.com')">
+            <div class="ex-label">Safe</div>
+            <div class="ex-url">https://www.github.com</div>
+        </div>
+        <div class="example-card danger"
+             onclick="testURL('http://paypal-verify-account.com/login')">
+            <div class="ex-label">Phishing</div>
+            <div class="ex-url">http://paypal-verify-account.com/login</div>
+        </div>
+        <div class="example-card danger"
+             onclick="testURL('http://free-prize-winner.tk/claim')">
+            <div class="ex-label">Phishing</div>
+            <div class="ex-url">http://free-prize-winner.tk/claim</div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

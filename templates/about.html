@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About - AI Phishing Detector</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="brand">AI Phishing Detector</div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h2 style="color:#58a6ff;margin-bottom:24px">How It Works</h2>
+
+    <div class="about-grid">
+        <div class="about-card">
+            <div class="about-icon">1</div>
+            <h3>Feature Extraction</h3>
+            <p>The URL is broken down into 15 features including length,
+               dots, hyphens, IP address presence, HTTPS usage,
+               suspicious keywords and URL entropy.</p>
+        </div>
+        <div class="about-card">
+            <div class="about-icon">2</div>
+            <h3>Random Forest Model</h3>
+            <p>A Random Forest classifier with 100 decision trees
+               analyses the features and votes on whether the URL
+               is phishing or legitimate.</p>
+        </div>
+        <div class="about-card">
+            <div class="about-icon">3</div>
+            <h3>Confidence Score</h3>
+            <p>The model outputs a probability score showing how
+               confident it is in its prediction, giving you
+               clear insight into the result.</p>
+        </div>
+    </div>
+
+    <div class="features-table">
+        <h3 style="color:#58a6ff;margin-bottom:16px">Features Analysed</h3>
+        <table>
+            <tr><th>Feature</th><th>Description</th></tr>
+            <tr><td>URL Length</td><td>Phishing URLs tend to be longer</td></tr>
+            <tr><td>Number of Dots</td><td>More dots may indicate subdomains used for deception</td></tr>
+            <tr><td>HTTPS</td><td>Phishing sites often use HTTP not HTTPS</td></tr>
+            <tr><td>IP Address</td><td>Legitimate sites use domain names not raw IPs</td></tr>
+            <tr><td>Suspicious Words</td><td>Words like login, verify, secure, prize</td></tr>
+            <tr><td>URL Entropy</td><td>Random-looking URLs are more suspicious</td></tr>
+            <tr><td>Subdomains</td><td>Too many subdomains indicate phishing</td></tr>
+            <tr><td>Special Characters</td><td>Count of @, =, ? in the URL</td></tr>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
