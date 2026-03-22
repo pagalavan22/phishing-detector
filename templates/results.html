@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Model Results - AI Phishing Detector</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="brand">AI Phishing Detector</div>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/results">Model Results</a>
+        <a href="/about">About</a>
+    </div>
+</nav>
+
+<div class="container">
+    <h2 style="color:#58a6ff;margin-bottom:8px">Model Performance Comparison</h2>
+    <p style="color:#888;margin-bottom:24px;font-size:14px">
+        5 ML models trained and compared on 300 URLs with 24 features each.
+    </p>
+
+    {% if results %}
+
+    <!-- Best Model Banner -->
+    <div style="background:#1f3a1f;border:1px solid #2ea043;border-radius:8px;
+                padding:16px 20px;margin-bottom:24px;display:flex;
+                justify-content:space-between;align-items:center">
+        <div>
+            <div style="color:#3fb950;font-weight:700;font-size:18px">
+                Best Model: {{ results.best_model }}
+            </div>
+            <div style="color:#888;font-size:13px;margin-top:4px">
+                Highest accuracy on test dataset
+            </div>
+        </div>
+        <div style="font-size:36px;font-weight:700;color:#3fb950">
+            {{ results.best_accuracy }}%
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-row">
+        {% for name, data in results.models.items() %}
+        <div class="stat-box {% if name == results.best_model %}best{% endif %}">
+            <div class="stat-name">{{ name }}</div>
+            <div class="stat-acc">{{ data.accuracy }}%</div>
+            <div class="stat-cv">CV: {{ data.cv_score }}%</div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Accuracy Chart -->
+    <div class="chart-grid">
+        <div class="chart-card">
+            <h3>Accuracy Comparison</h3>
+            <canvas id="accuracyChart" height="200"></canvas>
+        </div>
+        <div class="chart-card">
+            <h3>Cross Validation Score</h3>
+            <canvas id="cvChart" height="200"></canvas>
+        </div>
+    </div>
+
+    <!-- Confusion Matrix for best model -->
+    <div class="chart-card" style="margin-top:16px">
+        <h3>Confusion Matrix — {{ results.best_model }}</h3>
+        <div class="matrix-wrapper">
+            {% set cm = results.models[results.best_model].confusion %}
+            <div class="matrix">
+                <div class="matrix-label top">Predicted</div>
+                <div class="matrix-row">
+                    <div class="matrix-cell header"></div>
+                    <div class="matrix-cell header">Legitimate</div>
+                    <div class="matrix-cell header">Phishing</div>
+                </div>
+                <div class="matrix-row">
+                    <div class="matrix-cell header">Legitimate</div>
+                    <div class="matrix-cell tp">{{ cm[0][0] }}</div>
+                    <div class="matrix-cell fp">{{ cm[0][1] }}</div>
+                </div>
+                <div class="matrix-row">
+                    <div class="matrix-cell header">Phishing</div>
+                    <div class="matrix-cell fn">{{ cm[1][0] }}</div>
+                    <div class="matrix-cell tn">{{ cm[1][1] }}</div>
+                </div>
+            </div>
+            <div class="matrix-legend">
+                <div class="leg-item">
+                    <div class="leg-color tp"></div>
+                    <span>True Negative (correctly identified legitimate)</span>
+                </div>
+                <div class="leg-item">
+                    <div class="leg-color tn"></div>
+                    <span>True Positive (correctly identified phishing)</span>
+                </div>
+                <div class="leg-item">
+                    <div class="leg-color fp"></div>
+                    <span>False Positive (legitimate flagged as phishing)</span>
+                </div>
+                <div class="leg-item">
+                    <div class="leg-color fn"></div>
+                    <span>False Negative (phishing missed)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    const models   = {{ results.models | tojson }};
+    const names    = Object.keys(models);
+    const accs     = names.map(n => models[n].accuracy);
+    const cvs      = names.map(n => models[n].cv_score);
+    const best     = "{{ results.best_model }}";
+    const colors   = names.map(n =>
+        n === best ? "#3fb950" : "#58a6ff");
+
+    new Chart(document.getElementById("accuracyChart"), {
+        type: "bar",
+        data: {
+            labels: names,
+            datasets: [{
+                data: accs,
+                backgroundColor: colors,
+                borderRadius: 4,
+                borderWidth: 0
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } },
+            scales: {
+                y: {
+                    min: 50, max: 100,
+                    ticks: { color: "#888", callback: v => v + "%" },
+                    grid:  { color: "#21262d" }
+                },
+                x: { ticks: { color: "#888" }, grid: { color: "#21262d" } }
+            }
+        }
+    });
+
+    new Chart(document.getElementById("cvChart"), {
+        type: "bar",
+        data: {
+            labels: names,
+            datasets: [{
+                data: cvs,
+                backgroundColor: names.map(n =>
+                    n === best ? "#a371f7" : "#58a6ff"),
+                borderRadius: 4,
+                borderWidth: 0
+            }]
+        },
+        options: {
+            plugins: { legend: { display: false } },
+            scales: {
+                y: {
+                    min: 50, max: 100,
+                    ticks: { color: "#888", callback: v => v + "%" },
+                    grid:  { color: "#21262d" }
+                },
+                x: { ticks: { color: "#888" }, grid: { color: "#21262d" } }
+            }
+        }
+    });
+    </script>
+
+    {% else %}
+    <div style="text-align:center;padding:60px;color:#888">
+        <p>No results found. Please run train_model.py first.</p>
+    </div>
+    {% endif %}
+</div>
+
+</body>
+</html>

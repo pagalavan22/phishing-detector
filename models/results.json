@@ -1,0 +1,76 @@
+{
+    "best_model": "Random Forest",
+    "best_accuracy": 100.0,
+    "models": {
+        "Random Forest": {
+            "accuracy": 100.0,
+            "cv_score": 100.0,
+            "confusion": [
+                [
+                    33,
+                    0
+                ],
+                [
+                    0,
+                    26
+                ]
+            ]
+        },
+        "Decision Tree": {
+            "accuracy": 100.0,
+            "cv_score": 99.57,
+            "confusion": [
+                [
+                    33,
+                    0
+                ],
+                [
+                    0,
+                    26
+                ]
+            ]
+        },
+        "SVM": {
+            "accuracy": 100.0,
+            "cv_score": 100.0,
+            "confusion": [
+                [
+                    33,
+                    0
+                ],
+                [
+                    0,
+                    26
+                ]
+            ]
+        },
+        "Logistic Regression": {
+            "accuracy": 100.0,
+            "cv_score": 100.0,
+            "confusion": [
+                [
+                    33,
+                    0
+                ],
+                [
+                    0,
+                    26
+                ]
+            ]
+        },
+        "KNN": {
+            "accuracy": 100.0,
+            "cv_score": 99.15,
+            "confusion": [
+                [
+                    33,
+                    0
+                ],
+                [
+                    0,
+                    26
+                ]
+            ]
+        }
+    }
+}

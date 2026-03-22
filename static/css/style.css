@@ -202,10 +202,11 @@ body {
 .ex-url { font-size: 12px; color: #888; word-break: break-all; }
 
 .container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 40px auto;
-    padding: 0 20px;
+    padding: 0 20px 60px;
 }
+
 .about-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -253,3 +254,133 @@ td {
     border-top: 1px solid #21262d;
     font-size: 14px;
 }
+
+/* ── Results Page ─────────────────────────────────────────── */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+}
+.stat-box {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+}
+.stat-box.best {
+    border-color: #3fb950;
+    background: #1f3a1f;
+}
+.stat-name {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 8px;
+}
+.stat-acc {
+    font-size: 24px;
+    font-weight: 700;
+    color: #58a6ff;
+}
+.stat-box.best .stat-acc { color: #3fb950; }
+.stat-cv {
+    font-size: 12px;
+    color: #888;
+    margin-top: 4px;
+}
+
+.chart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+.chart-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 20px;
+}
+.chart-card h3 {
+    color: #58a6ff;
+    font-size: 15px;
+    margin-bottom: 16px;
+}
+
+.matrix-wrapper {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.matrix { display: inline-block; }
+.matrix-row { display: flex; }
+.matrix-cell {
+    width: 120px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    border: 1px solid #30363d;
+}
+.matrix-cell.header {
+    background: #21262d;
+    color: #888;
+    font-size: 12px;
+    font-weight: 600;
+}
+.matrix-cell.tp {
+    background: #1f3a1f;
+    color: #3fb950;
+    font-size: 28px;
+    font-weight: 700;
+}
+.matrix-cell.tn {
+    background: #1f2d3d;
+    color: #58a6ff;
+    font-size: 28px;
+    font-weight: 700;
+}
+.matrix-cell.fp {
+    background: #3d2b1f;
+    color: #ffa657;
+    font-size: 28px;
+    font-weight: 700;
+}
+.matrix-cell.fn {
+    background: #3d1f1f;
+    color: #f85149;
+    font-size: 28px;
+    font-weight: 700;
+}
+.matrix-label {
+    text-align: center;
+    color: #888;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+.matrix-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+}
+.leg-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #888;
+}
+.leg-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+.leg-color.tp { background: #3fb950; }
+.leg-color.tn { background: #58a6ff; }
+.leg-color.fp { background: #ffa657; }
+.leg-color.fn { background: #f85149; }
